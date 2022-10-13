@@ -97,9 +97,8 @@ namespace WebApplication1.Controllers
         public JsonResult Put(Trabajadores emp)
         {
             string query = @"
-                           update dbo.Trabajadores
-                           set Cedula= @Cedula,
-                            Nombre=@Nombre,
+                            update dbo.Trabajadores
+                            set Nombre=@Nombre,
                             Apellido1=@Apellido1,
                             Apellido2=@Apellido2,
                             Ingreso = @Ingreso,
@@ -108,6 +107,7 @@ namespace WebApplication1.Controllers
                             Password_trab = @Password_trab,
                             Rol = @Rol,
                             Pago = @Pago
+                            where Cedula= @Cedula
                             ";
 
             DataTable table = new DataTable();
@@ -154,7 +154,7 @@ namespace WebApplication1.Controllers
                 myCon.Open();
                 using (SqlCommand myCommand = new SqlCommand(query, myCon))
                 {
-                    myCommand.Parameters.AddWithValue("@Trabajadores", id);
+                    myCommand.Parameters.AddWithValue("@Cedula", id);
 
                     myReader = myCommand.ExecuteReader();
                     table.Load(myReader);
