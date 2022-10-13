@@ -93,13 +93,13 @@ namespace WebApplication1.Controllers
         {
             string query = @"
                            update dbo.Cliente
-                           set Cedula= @Cedula,
-                            Cliente_Nombre=@Cliente_Nombre,
+                           set Cliente_Nombre=@Cliente_Nombre,
                             Cliente_Apellido1=@Cliente_Apellido1,
                             Cliente_Apellido2=@Cliente_Apellido2,
                             Email = @Email,
                             Usuario = @Usuario,
                             Password_cliente = @Password_cliente
+                            where Cedula= @Cedula
 
 
                             ";
@@ -145,7 +145,7 @@ namespace WebApplication1.Controllers
                 myCon.Open();
                 using (SqlCommand myCommand = new SqlCommand(query, myCon))
                 {
-                    myCommand.Parameters.AddWithValue("@Clientes", id);
+                    myCommand.Parameters.AddWithValue("@Cedula", id);
 
                     myReader = myCommand.ExecuteReader();
                     table.Load(myReader);
