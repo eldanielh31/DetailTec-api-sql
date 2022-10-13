@@ -138,8 +138,8 @@ namespace WebApplication1.Controllers
             return new JsonResult("Updated Successfully");
         }
 
-        [HttpDelete("{id}")]
-        public JsonResult Delete(int id)
+        [HttpDelete("{Cedula}")]
+        public JsonResult Delete(int Cedula)
         {
             string query = @"
                            delete from dbo.Trabajadores
@@ -154,7 +154,7 @@ namespace WebApplication1.Controllers
                 myCon.Open();
                 using (SqlCommand myCommand = new SqlCommand(query, myCon))
                 {
-                    myCommand.Parameters.AddWithValue("@Cedula", id);
+                    myCommand.Parameters.AddWithValue("@Cedula", Cedula);
 
                     myReader = myCommand.ExecuteReader();
                     table.Load(myReader);
