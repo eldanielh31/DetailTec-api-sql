@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -106,7 +106,7 @@ namespace WebApplication1.Controllers
                             telefono2=@telefono2,
                             email = @email,
                             usuario = @usuario,
-                            psw_cliente = @psw_cliente
+                            psw_cliente = @psw_cliente,
                             puntos = @puntos
                             where cedula= @cedula
 
@@ -197,9 +197,39 @@ namespace WebApplication1.Controllers
                 }
             }
 
+         
+             return new JsonResult(table);
+        }
+
+        [HttpGet("email/{email}")]
+        public JsonResult GetEmail(string email)
+        {
+            string query = @"
+                            select * from
+                            dbo.Clientes
+                            where email=@email
+                            ";
+
+            DataTable table = new DataTable();
+            string sqlDataSource = _configuration.GetConnectionString("TrabajadoresAppCon");
+            SqlDataReader myReader;
+            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+                using (SqlCommand myCommand = new SqlCommand(query, myCon))
+                {
+                    myCommand.Parameters.AddWithValue("@email", email);
+
+                    myReader = myCommand.ExecuteReader();
+                    table.Load(myReader);
+                    myReader.Close();
+                    myCon.Close();
+                }
+            }
+
             return new JsonResult(table);
         }
 
-        
-}
+
+    }
 }
