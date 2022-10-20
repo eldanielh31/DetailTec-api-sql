@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -56,8 +56,8 @@ namespace WebApplication1.Controllers
         public JsonResult Post(Facturas emp)
         {
             string query = @"
-                           insert into dbo.Facturas (fact_id ,cita_id,snacks_consumidos,bebidas_consumidas, precio_servicio, monto, iva) 
-                           values (@fact_id ,@cita_id, @snacks_consumidos,@bebidas_consumidas, @precio_servicio, @monto, @iva)             
+                           insert into dbo.Facturas (fact_id ,cita_id,snacks_consumidos,bebidas_consumidas, precio_servicio, monto) 
+                           values (@fact_id ,@cita_id, @snacks_consumidos,@bebidas_consumidas, @precio_servicio, @monto)             
                      
                             ";
 
@@ -75,7 +75,7 @@ namespace WebApplication1.Controllers
                     myCommand.Parameters.AddWithValue("@bebidas_consumidas", emp.bebidas_consumidas);
                     myCommand.Parameters.AddWithValue("@precio_servicio", emp.precio_servicio);
                     myCommand.Parameters.AddWithValue("@monto", emp.monto);
-                    myCommand.Parameters.AddWithValue("@iva", emp.iva);
+                    
 
                     myReader = myCommand.ExecuteReader();
                     table.Load(myReader);
@@ -99,7 +99,7 @@ namespace WebApplication1.Controllers
                            bebidas_consumidas=@bebidas_consumidas,
                            precio_servicio=@precio_servicio,
                            monto = @monto
-                           iva = @iva
+                          
                           
                            where fact_id= @fact_id
                             ";
@@ -118,7 +118,7 @@ namespace WebApplication1.Controllers
                     myCommand.Parameters.AddWithValue("@bebidas_consumidas", emp.bebidas_consumidas);
                     myCommand.Parameters.AddWithValue("@precio_servicio", emp.precio_servicio);
                     myCommand.Parameters.AddWithValue("@monto", emp.monto);
-                    myCommand.Parameters.AddWithValue("@iva", emp.iva);
+                    
 
                     myReader = myCommand.ExecuteReader();
                     table.Load(myReader);
