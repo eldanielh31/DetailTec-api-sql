@@ -206,7 +206,7 @@ namespace WebApplication1.Controllers
         public JsonResult GetEmail(string email)
         {
             string query = @"
-                            select * from
+                            select top 1 * from
                             dbo.Trabajadores
                             where email=@email
                             ";
