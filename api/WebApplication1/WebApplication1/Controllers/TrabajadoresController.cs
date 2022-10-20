@@ -201,5 +201,33 @@ namespace WebApplication1.Controllers
 
             return new JsonResult(table);
         }
+        [HttpGet("email/{email}")]
+        public JsonResult GetEmail(string email)
+        {
+            string query = @"
+                            select * from
+                            dbo.Trabajadores
+                            where email=@email
+                            ";
+
+            DataTable table = new DataTable();
+            string sqlDataSource = _configuration.GetConnectionString("TrabajadoresAppCon");
+            SqlDataReader myReader;
+            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+                using (SqlCommand myCommand = new SqlCommand(query, myCon))
+                {
+                    myCommand.Parameters.AddWithValue("@email", email);
+
+                    myReader = myCommand.ExecuteReader();
+                    table.Load(myReader);
+                    myReader.Close();
+                    myCon.Close();
+                }
+            }
+
+            return new JsonResult(table);
+        }
     }
 }
