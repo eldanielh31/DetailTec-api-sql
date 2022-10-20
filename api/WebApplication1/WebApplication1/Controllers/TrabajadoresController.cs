@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -143,8 +143,8 @@ namespace WebApplication1.Controllers
             return new JsonResult("Updated Successfully");
         }
 
-        [HttpDelete("{id}")]
-        public JsonResult Delete(int id)
+        [HttpDelete("{trabajador_id}")]
+        public JsonResult Delete(int trabajador_id)
         {
             string query = @"
                            delete from dbo.Trabajadores
@@ -159,7 +159,7 @@ namespace WebApplication1.Controllers
                 myCon.Open();
                 using (SqlCommand myCommand = new SqlCommand(query, myCon))
                 {
-                    myCommand.Parameters.AddWithValue("@trabajador_id", id);
+                    myCommand.Parameters.AddWithValue("@trabajador_id", trabajador_id);
 
                     myReader = myCommand.ExecuteReader();
                     table.Load(myReader);
@@ -201,6 +201,7 @@ namespace WebApplication1.Controllers
 
             return new JsonResult(table);
         }
+
         [HttpGet("email/{email}")]
         public JsonResult GetEmail(string email)
         {
@@ -231,3 +232,4 @@ namespace WebApplication1.Controllers
         }
     }
 }
+
